@@ -18,10 +18,37 @@
     <!-- stylesheet -->
      <link rel="stylesheet" href="./style/style.css">
 </head>
-<body>
-    <header>
-        
-    </header>
+<body class="flex items-center justify-center min-h-screen bg-[#f8fafc]">
+    <!-- login section -->
+    <section class="fieldset bg-base-200 border-[#ffffff] bg-[#ffffff] box- rounded-box w-xs border p-4 mx-auto  space-y-1 shadow-[0px_5px_10px_0px_#00000014]">
+        <div class="mx-auto text-center justify-items-center space-y-1">
+            <img src="./assets/github-logo.png" alt="">
+            <h1 class="font-semibold text-base text-[#1f2937]">GitHub Issues Tracker</h1>
+            <p class="text-[16px] text-[#64748b]">Sign in to manage your issues</p>
+        </div>
+        <div>
+            <label class="label font-medium text-[#1f2937] text-[16px]">Username</label>
+            <input minlength="5" type="text" class="input border-[#e4e4e7]" placeholder="Enter Username" />
+            <p class=" text-primary">Default: admin</p>
+
+            <label class="label font-medium text-[#1f2937] text-[16px]">Password</label>
+            <input minlength="6" type="password" class="input border-[#e4e4e7]" placeholder="Enter Password" />
+            <p class=" text-primary">Default: admin123</p>
+            <button class="btn btn-primary w-[100%] mt-4">Sign In</button>
+
+        </div>
+        <div class="flex items-center gap-2">
+            <hr class="flex-1  border-[#e4e4e7]">
+            <span class="text-[#1f2937]">OR</span>
+            <hr class="flex-1 border-[#e4e4e7]">
+        </div>
+        <p class="text-center text-[#64748b]">Demo Credentials:</p>
+        <div class="mx-auto text-center bg-[#f8fafc] p-5 rounded-md w-full space-y-1">
+            <p class="text-[#1f2937] text-[16px]"><span class="font-semibold">Username:</span> admin </p> 
+            <p class="text-[#1f2937] text-[16px]"><span class="font-semibold">Password:</span> admin123</p>
+        </div>
+
+    </section>
     
 
     <script src="./script/script.js"></script>
