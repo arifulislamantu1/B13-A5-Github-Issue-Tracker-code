@@ -42,38 +42,41 @@
   </svg>
   <input type="search" required placeholder="Search issues..." />
   </div>
-    <div class="dropdown dropdown-end">
-      <div tabindex="0" role="button" class="   ">
         <div class="rounded-sm">
-            <button class="btn btn-primary">+ New Issue</button>
+            <button class="btn btn-primary">Search</button>
         </div>
-      </div>
-      <ul
-        tabindex="-1"
-        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-        <li>
-          <a class="justify-between">
-            Profile
-            <span class="badge">New</span>
-          </a>
-        </li>
-        <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
-      </ul>
-    </div>
   </div>
 </div>
     </header>
 
     <!-- tab button section -->
      <section class="mt-16 p-6 border w-11/12 mx-auto border-[#ffffff] bg-[#ffffff] shadow-[0px_1px_6px_0px_#00000014]">
-        <button class="btn btn-soft btn-primary">all</button>
-        <button class="btn btn-soft btn-primary">Open</button>
-        <button class="btn btn-soft btn-primary">Close</button>
+        <button class="btn btn-soft btn-primary mr-2">All</button>
+        <button class="btn btn-soft btn-primary mr-2">Open</button>
+        <button class="btn btn-soft btn-primary">Closed</button>
      </section>
-     
 
-    
+     <!-- issues section -->
+     <section class="mt-4 w-11/12 mx-auto ">
+        <div class="bg-[#fbfbfb] border border-[#e4e4e7] rounded-lg p-6 md:flex space-y-3 justify-between">
+            <div class="flex gap-2 items-center">
+                <img class="h-full w-15" src="./assets/Aperture.png" alt="">
+                <div>
+                <p class="text-[#1f2937] font-semibold text-[20px]"><span>50</span> Issues</p>
+                <p class="text-[#64748b]">Track and manage your project issues</p>
+                </div>
+            </div> 
+            <div class="flex gap-4 items-center justify-center">
+                <div class="flex gap-2 items-center "><div class="h-3 w-3 bg-[#00a96e] rounded-full"></div> <p class="font-medium text-base texr-[#64748b]"> Open </p></div>
+                <div class="flex gap-2 items-center"><div class="h-3 w-3 bg-[#a855f7] rounded-full"></div><p class="font-medium text-base texr-[#64748b]">Closed </p></div>
+            </div>
+        </div>
+
+        <!-- issues cards -->
+         <div>
+            
+         </div>
+     </section>
 
     <script src="./script/home.js"></script>
 </body>
