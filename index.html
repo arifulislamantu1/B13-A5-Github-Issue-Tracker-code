@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Github Issue Tracker</title>
+    <title>Github Issue Tracker | Login</title>
     <!-- favicon -->
     <link rel="shortcut icon" href="./assets/github-logo.png" type="image/x-icon">
     <!-- google font -->
@@ -18,7 +18,7 @@
     <!-- stylesheet -->
      <link rel="stylesheet" href="./style/style.css">
 </head>
-<body class="flex items-center justify-center min-h-screen bg-[#f8fafc]">
+<body class=" min-h-screen  flex items-center justify-center bg-[#f8fafc] ">
     <!-- login section -->
     <section class="fieldset bg-base-200 border-[#ffffff] bg-[#ffffff] box- rounded-box w-xs border p-4 mx-auto  space-y-1 shadow-[0px_5px_10px_0px_#00000014]">
         <div class="mx-auto text-center justify-items-center space-y-1">
@@ -28,13 +28,13 @@
         </div>
         <div>
             <label class="label font-medium text-[#1f2937] text-[16px]">Username</label>
-            <input minlength="5" type="text" class="input border-[#e4e4e7]" placeholder="Enter Username" />
+            <input id="input-name" minlength="5" type="text" class="input border-[#e4e4e7]" placeholder="Enter Username" value="admin"/>
             <p class=" text-primary">Default: admin</p>
 
             <label class="label font-medium text-[#1f2937] text-[16px]">Password</label>
-            <input minlength="6" type="password" class="input border-[#e4e4e7]" placeholder="Enter Password" />
+            <input id="input-password" minlength="6" type="password" class="input border-[#e4e4e7]" placeholder="Enter Password" value="admin123"/>
             <p class=" text-primary">Default: admin123</p>
-            <button class="btn btn-primary w-[100%] mt-4">Sign In</button>
+            <button id="login-btn" class="btn btn-primary w-[100%] mt-4">Sign In</button>
 
         </div>
         <div class="flex items-center gap-2">
@@ -51,6 +51,6 @@
     </section>
     
 
-    <script src="./script/script.js"></script>
+    <script src="./script/login.js"></script>
 </body>
 </html>
