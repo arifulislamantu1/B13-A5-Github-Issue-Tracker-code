@@ -1,4 +1,4 @@
-const API = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
+const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
 let currentTab = 'all';
 
 
@@ -19,32 +19,25 @@ function switchTab(tab) {
 }
 
 
-async function fetchAndFilterIssues() {
-  try {
-    const searchText = document.getElementById("searchInput").value.trim();
-    let url = "";
+const fetchAndFilterIssues = async () => {
+  const searchText = document.getElementById("searchInput").value.trim();
 
-    if (searchText) {
-      
-      url = `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${encodeURIComponent(searchText)}`;
-    } else {
-      url = API;
-    }
+  const search = searchText
+    ? `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${encodeURIComponent(searchText)}`
+    : url;
 
-    const res = await fetch(url);
-    const result = await res.json();
+  fetch(search)
+    .then(res => res.json())
+    .then(({ data }) => {
+      const filteredIssues =
+        currentTab === "all"
+          ? data
+          : data.filter(issue => issue.status === currentTab);
 
-    let filtered = result.data;
-    if (currentTab !== 'all') {
-      filtered = filtered.filter(issue => issue.status === currentTab);
-    }
-
-    displayIssues(filtered);
-
-  } catch (err) {
-    console.error("Error fetching issues:", err);
-  }
-}
+      displayIssues(filteredIssues);
+    })
+    .catch(error => console.error("Error fetching issues:", error));
+};
 
 
 function displayIssues(issues) {
