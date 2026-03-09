@@ -62,7 +62,7 @@ function displayIssues(issues) {
                           issue.priority.toLowerCase() === 'medium' ? 'btn-warning' : 'btn-info';
 
     card.innerHTML = `
-        <div onclick="openIssueModal(${issue.id})" class="space-y-4">
+        <div onclick="IssueModal(${issue.id})" class="space-y-4">
       <div class="flex justify-between">
         <img class="w-8 h-8" src="./assets/Open-Status.png" alt="">
         <p class="btn btn-soft ${priorityColor} rounded-full">${issue.priority.toUpperCase()}</p>
@@ -82,14 +82,12 @@ function displayIssues(issues) {
       </div>
     `;
 
-    
-    // card.addEventListener('click', () => openIssueModal(issue.id));
 
     container.appendChild(card);
   });
 }
 
-const openIssueModal = async (id) =>{
+const IssueModal = async (id) =>{
     const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
 
     const res = await fetch(url);
