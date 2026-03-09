@@ -1,72 +1,115 @@
-let currentTab ='all';
-const tabActive = ["btn-primary"];
-const tabInActive = ["btn-Soft"];
+const API = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
+let currentTab = 'all';
 
 
 function switchTab(tab) {
-    const tabs = ['all', 'open', 'closed'];
-    for(const t of tabs) {
-        const tabName = document.getElementById('tab-' + t);
-        if( t === tab){
-            tabName.classList.remove('btn-soft');
-            tabName.classList.add('btn-primary');
-        }else{
-             tabName.classList.add('btn-soft');
-            tabName.classList.remove('btn-primary');
-        }
+  const tabs = ['all', 'open', 'closed'];
+  tabs.forEach(t => {
+    const el = document.getElementById('tab-' + t);
+    if (t === tab) {
+      el.classList.remove('btn-soft');
+      el.classList.add('btn-primary');
+    } else {
+      el.classList.add('btn-soft');
+      el.classList.remove('btn-primary');
     }
+  });
+  currentTab = tab;
+  fetchAndFilterIssues();
 }
 
 
-const loadIssues = () => {
-    fetch('https://phi-lab-server.vercel.app/api/v1/lab/issues')
-    .then(res => res.json())
-    .then(data => displayIssues(data.data))
-};
+async function fetchAndFilterIssues() {
+  try {
+    const searchText = document.getElementById("searchInput").value.trim();
+    let url = "";
 
-const displayIssues = (issues) => {
-const issuesCardContainer = document.getElementById('issues-card-container');
+    if (searchText) {
+      
+      url = `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${encodeURIComponent(searchText)}`;
+    } else {
+      url = API;
+    }
 
-    issuesCardContainer.innerHTML = '';
+    const res = await fetch(url);
+    const result = await res.json();
 
-    issues.forEach(issue =>{
-        const card = document.createElement('div');
+    let filtered = result.data;
+    if (currentTab !== 'all') {
+      filtered = filtered.filter(issue => issue.status === currentTab);
+    }
 
-        card.className = "bg-white p-4 rounded shadow cursor-pointer";
+    displayIssues(filtered);
 
-        if(issue.status === "open"){
-        card.style.borderTop = "5px solid green";
-        }
-        else{
-        card.style.borderTop = "5px solid purple";
+  } catch (err) {
+    console.error("Error fetching issues:", err);
+  }
 }
 
-        card.innerHTML = `
 
-         <div class=" space-y-5">
-                <div class="flex justify-between">
-                    <img class="w-8 h-8" src="./assets/Open-Status.png" alt="">
-                    <p class="btn btn-soft btn-error rounded-full">HIGH</p>
-                </div>
-                <div class="space-y-3">
-                    <h1 class="font-bold text-[#1f2937]">${issue.title}</h1>
-                    <p class="text-[#64748b] text-[12px]">${issue.description}</p>
+function displayIssues(issues) {
+  const container = document.getElementById('issues-card-container');
+  container.innerHTML = '';
 
-                </div>
-                <div class="flex gap-2">
-                    <p class="btn btn-soft btn-error rounded-full">BUG</p>
-                    <p class="btn btn-soft btn-warning rounded-full shadow-sm border-0">HELP WANTED</p>
-                </div>
-                <div class=" border border-[#e4e4e7] p-4 space-y-1">
-                    <p class="text-[#64748b] text-[12px]">#1 by john_doe</p>
-                    <p class="text-[#64748b] text-[12px]">1/15/2024</p>
-                </div>
-            </div>
+  issues.forEach(issue => {
+    const card = document.createElement('div');
+    card.className = "bg-[#fbfbfb] p-4 space-y-5 rounded-md shadow-lg cursor-pointer";
+    card.style.borderTop = issue.status === 'open' ? '5px solid green' : '5px solid purple';
 
-        `;
-        issuesCardContainer.append(card);
-    });
+  
+    const labelsHtml = issue.labels.map(label =>
+      `<p class="btn btn-soft btn-sm rounded-full">${label}</p>`
+    ).join(' ');
+
+    
+    const priorityColor = issue.priority.toLowerCase() === 'high' ? 'btn-error' :
+                          issue.priority.toLowerCase() === 'medium' ? 'btn-warning' : 'btn-info';
+
+    card.innerHTML = `
+      <div class="flex justify-between">
+        <img class="w-8 h-8" src="./assets/Open-Status.png" alt="">
+        <p class="btn btn-soft ${priorityColor} rounded-full">${issue.priority.toUpperCase()}</p>
+      </div>
+
+      <div class="space-y-3">
+        <h1 class="font-bold text-[#1f2937]">${issue.title}</h1>
+        <p class="text-[#64748b] text-[12px]">${issue.description}</p>
+      </div>
+
+      <div class="flex gap-2 flex-wrap">${labelsHtml}</div>
+
+      <div class="border border-[#e4e4e7] p-4 space-y-1 text-[#64748b] text-[12px]">
+        <p>#${issue.id} by ${issue.author}</p>
+        <p>${new Date(issue.createdAt).toLocaleDateString()}</p>
+      </div>
+    `;
+
+    
+    card.addEventListener('click', () => openIssueModal(issue.id));
+
+    container.appendChild(card);
+  });
 }
 
-loadIssues();
-switchTab(currentTab);
+
+async function openIssueModal(id) {
+  try {
+    const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`);
+    const result = await res.json();
+    const issue = result.data;
+
+    alert(`Issue #${issue.id}\nTitle: ${issue.title}\nDescription: ${issue.description}\nStatus: ${issue.status}\nPriority: ${issue.priority}\nAuthor: ${issue.author}\nCreated: ${new Date(issue.createdAt).toLocaleString()}`);
+  } catch (err) {
+    console.error("Error fetching single issue:", err);
+  }
+}
+
+
+document.getElementById("searchInput").addEventListener("keyup", (e) => {
+  if (e.key === "Enter") {
+    fetchAndFilterIssues();
+  }
+});
+
+
+fetchAndFilterIssues();
