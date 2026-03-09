@@ -142,11 +142,16 @@ const displayCardDetails =(card) =>{
     document.getElementById('card_modal').showModal();
 }
 
-document.getElementById("searchInput").addEventListener("keyup", (e) => {
-  if (e.key === "Enter") {
-    fetchAndFilterIssues();
-  }
+const searchInput = document.getElementById("searchInput");
+const searchBtn = document.getElementById("search-btn");
+
+searchInput.addEventListener("keyup", function(e){
+    if(e.key === "Enter"){
+        fetchAndFilterIssues();
+    }
 });
+
+searchInput.addEventListener("input", fetchAndFilterIssues);
 
 
 fetchAndFilterIssues();
