@@ -51,6 +51,9 @@ function displayIssues(issues) {
   const container = document.getElementById('issues-card-container');
   container.innerHTML = '';
 
+    document.getElementById('count-issues').innerText = issues.length;
+
+
   issues.forEach(issue => {
     const card = document.createElement('div');
     card.className = "bg-[#fbfbfb] p-4 space-y-5 rounded-md shadow-lg cursor-pointer";
@@ -111,11 +114,15 @@ const displayCardDetails =(card) =>{
 
     const priorityColor = card.priority.toLowerCase() === 'high' ? 'btn-error' :
                           card.priority.toLowerCase() === 'medium' ? 'btn-warning' :'btn-info';
+    
+    const statusColor = card.status.toLowerCase() === 'open'
+        ? 'bg-[#00a96e] text-white px-2 py-1 rounded-full'
+        : 'bg-[#a855f7] text-white px-2 py-1 rounded-full';
                          
     detailsContainer.innerHTML = `
     <h1 class="font-bold text-[#1f2937]">${card.title}</h1>
             <div class="flex gap-2">
-                <span id="status-card" class="text-[#64748b] text-[12px]">${card.status}</span> <p class="text-[#64748b] text-[12px]"> Opened by ${card.assignee}</p> <p class="text-[#64748b] text-[12px]">${card.updatedAt}</p>
+                <span id="status-card" class="text-[#64748b] text-[12px] ${statusColor}">${card.status}</span> <p class="text-[#64748b] text-[12px]"> Opened by ${card.assignee}</p> <p class="text-[#64748b] text-[12px]">${card.updatedAt}</p>
             </div>
             <div class="flex gap-2 mt-2 mb-2 ${priorityColor}">${labelsHtml}</div>
             <p class="text-[#64748b] text-[12px]">${card.description}</p>
