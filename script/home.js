@@ -22,6 +22,14 @@ function switchTab(tab) {
 const fetchAndFilterIssues = async () => {
   const searchText = document.getElementById("searchInput").value.trim();
 
+   const container = document.getElementById('issues-card-container');
+
+  container.innerHTML = `
+    <div class="col-span-full flex justify-center items-center min-h-[40vh]">
+    <span class="loading loading-spinner loading-lg text-primary"></span>
+    </div>
+    `;
+
   const search = searchText
     ? `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${encodeURIComponent(searchText)}`
     : url;
